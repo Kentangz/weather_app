@@ -136,6 +136,9 @@ class AuthController extends GetxController {
       case 'too-many-requests':
         message = 'Too many attempts. Your account is temporarily locked for 15 minutes.';
         break;
+      case 'network-request-failed':
+        message = 'Internet connection lost. Please check your connection.';
+        break;
       default:
         message = 'An error occurred. Please try again later.';
     }

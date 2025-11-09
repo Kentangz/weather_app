@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:weather_app/app/modules/auth/controllers/auth_controller.dart';
 import 'package:weather_app/app/modules/home/controllers/home_controller.dart';
+import 'package:weather_app/app/modules/home/widgets/skeleton_view.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -9,11 +10,24 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      Color backgroundColor = controller.weather.value != null
-          ? controller.getBackgroundColor(
-              controller.weather.value!.mainCondition,
-            )
-          : Colors.blue.shade400;
+      final bool isInitialLoading =
+          controller.isLoading.value && controller.weather.value == null;
+
+      final Color backgroundColor;
+      if (isInitialLoading) {
+        backgroundColor = Colors.white;
+      } else if (controller.weather.value != null) {
+        backgroundColor = controller.getBackgroundColor(
+          controller.weather.value!.mainCondition,
+        );
+      } else {
+        backgroundColor = Colors.white;
+      }
+
+      final Color textColor =
+          (isInitialLoading || controller.weather.value == null)
+          ? Colors.black
+          : Colors.white;
 
       return Container(
         color: backgroundColor,
@@ -21,21 +35,26 @@ class HomeView extends GetView<HomeController> {
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             title: const Text('Weather App'),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
+            backgroundColor:
+                (isInitialLoading || controller.weather.value == null)
+                ? null
+                : Colors.transparent,
+            elevation: (isInitialLoading || controller.weather.value == null)
+                ? null
+                : 0,
+            foregroundColor: textColor,
             actions: [
               IconButton(
                 icon: const Icon(Icons.logout),
+                color: textColor,
                 onPressed: () {
                   Get.find<AuthController>().logout();
                 },
               ),
             ],
           ),
-
           body: RefreshIndicator(
             onRefresh: controller.fetchWeather,
-
             child: ListView(
               physics: const AlwaysScrollableScrollPhysics(),
               children: [
@@ -47,9 +66,7 @@ class HomeView extends GetView<HomeController> {
                       child: Obx(() {
                         if (controller.isLoading.value &&
                             controller.weather.value == null) {
-                          return const CircularProgressIndicator(
-                            color: Colors.white,
-                          );
+                          return const SkeletonView();
                         }
 
                         if (controller.weather.value != null) {
@@ -92,14 +109,25 @@ class HomeView extends GetView<HomeController> {
                             ],
                           );
                         } else {
-                          // Jika error
-                          return Text(
-                            controller.weatherMessage.value,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                            textAlign: TextAlign.center,
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                controller.weatherMessage.value,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: textColor,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              if (controller.locationErrorType.value != null)
+                                const SizedBox(height: 20),
+                              if (controller.locationErrorType.value != null)
+                                ElevatedButton(
+                                  onPressed: controller.openSettings,
+                                  child: const Text('Open Settings'),
+                                ),
+                            ],
                           );
                         }
                       }),
