@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
-import 'package:weather_app/app/modules/home/bindings/home_binding.dart';
-import 'package:weather_app/app/modules/home/views/home_view.dart';
+import 'package:weather_app/app/routes/app_pages.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:weather_app/app/modules/auth/controllers/auth_controller.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await dotenv.load(fileName: ".env");
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  Get.put(AuthController(), permanent: true);
 
   runApp(const MyApp());
 }
@@ -20,15 +28,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       debugShowCheckedModeBanner: false,
 
-      initialRoute: '/home',
+      initialRoute: AppPages.INITIAL,
 
-      getPages: [
-        GetPage(
-          name: '/home',
-          page: () => const HomeView(),
-          binding: HomeBinding(),
-        ),
-      ],
+      getPages: AppPages.routes,
     );
   }
 }

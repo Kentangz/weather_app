@@ -38,6 +38,8 @@ dependencies:
   geolocator: ^14.0.2
   flutter_dotenv: ^6.0.0
   get: ^4.7.2
+  firebase_core: ^4.2.1
+  firebase_auth: ^6.1.2
 
 dev_dependencies:
   flutter_test:

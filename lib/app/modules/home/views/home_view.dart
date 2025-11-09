@@ -1,6 +1,6 @@
-// lib/app/modules/home/views/home_view.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:weather_app/app/modules/auth/controllers/auth_controller.dart';
 import 'package:weather_app/app/modules/home/controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -23,22 +23,23 @@ class HomeView extends GetView<HomeController> {
             title: const Text('Weather App'),
             backgroundColor: Colors.transparent,
             elevation: 0,
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.logout),
+                onPressed: () {
+                  Get.find<AuthController>().logout();
+                },
+              ),
+            ],
           ),
 
-          // --- PERUBAHAN DIMULAI DI SINI ---
           body: RefreshIndicator(
-            // 1. Hubungkan fungsi onRefresh ke controller
             onRefresh: controller.fetchWeather,
 
-            // 2. Bungkus konten kita dengan ListView agar bisa di-scroll
             child: ListView(
-              // Ini penting agar RefreshIndicator berfungsi
-              // bahkan saat konten tidak penuh
               physics: const AlwaysScrollableScrollPhysics(),
               children: [
-                // 3. Kita gunakan SizedBox untuk membuat konten tetap di tengah
                 SizedBox(
-                  // Sesuaikan tinggi agar konten pas di tengah layar
                   height: MediaQuery.of(context).size.height * 0.75,
                   child: Center(
                     child: Padding(
@@ -46,7 +47,6 @@ class HomeView extends GetView<HomeController> {
                       child: Obx(() {
                         if (controller.isLoading.value &&
                             controller.weather.value == null) {
-                          // Hanya tampilkan loading besar saat pertama kali
                           return const CircularProgressIndicator(
                             color: Colors.white,
                           );
@@ -109,9 +109,6 @@ class HomeView extends GetView<HomeController> {
               ],
             ),
           ),
-          // 4. Hapus FloatingActionButton
-          // floatingActionButton: ... (Baris ini dihapus)
-          // --- PERUBAHAN SELESAI ---
         ),
       );
     });
