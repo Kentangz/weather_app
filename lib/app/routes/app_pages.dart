@@ -1,8 +1,4 @@
-// ========================================
-// lib/app/routes/app_pages.dart
-// ========================================
 import 'package:get/get.dart';
-import 'package:weather_app/app/modules/auth/bindings/auth_binding.dart';
 import 'package:weather_app/app/modules/auth/views/login_view.dart';
 import 'package:weather_app/app/modules/auth/views/register_view.dart';
 import 'package:weather_app/app/modules/home/bindings/home_binding.dart';
@@ -23,12 +19,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.LOGIN,
       page: () => const LoginView(),
-      binding: AuthBinding(),
     ),
     GetPage(
       name: AppRoutes.REGISTER,
       page: () => const RegisterView(),
-      binding: AuthBinding(),
     ),
     GetPage(
       name: AppRoutes.HOME,

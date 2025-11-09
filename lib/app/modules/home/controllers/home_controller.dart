@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:weather_app/app/data/models/weather_model.dart';
 import 'package:weather_app/app/data/services/weather_service.dart';
+import 'package:weather_app/app/utils/notification_helper.dart';
 
 class HomeController extends GetxController {
   final WeatherService _weatherService = WeatherService();
@@ -27,6 +28,9 @@ class HomeController extends GetxController {
     } catch (e) {
       weather.value = null;
       weatherMessage.value = e.toString();
+      NotificationHelper.showError(
+        'Failed to Load Data', e.toString()
+      );
     } finally {
       isLoading(false);
     }

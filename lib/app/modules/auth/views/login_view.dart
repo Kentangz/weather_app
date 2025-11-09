@@ -32,7 +32,7 @@ class LoginView extends GetView<AuthController> {
               ),
               const SizedBox(height: 8),
               const Text(
-                'Please login to continue',
+                'Please sign in to continue',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
@@ -62,8 +62,16 @@ class LoginView extends GetView<AuthController> {
                 ),
                 obscureText: true,
               ),
-              const SizedBox(height: 24),
 
+              Container(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: controller.sendPasswordReset,
+                  child: const Text('Forgot Password?'),
+                ),
+              ),
+
+              const SizedBox(height: 12),
               ElevatedButton(
                 onPressed: controller.login,
                 style: ElevatedButton.styleFrom(
@@ -77,10 +85,9 @@ class LoginView extends GetView<AuthController> {
               ),
               const SizedBox(height: 12),
 
-              // 6. Tombol Register
               TextButton(
                 onPressed: () => Get.toNamed(AppRoutes.REGISTER),
-                child: const Text("Don't have an account yet? Sign Up"),
+                child: const Text("Don't have an account? Sign up here"),
               ),
             ],
           ),
