@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:weather_app/app/modules/auth/controllers/auth_controller.dart';
 import 'package:weather_app/app/modules/home/controllers/home_controller.dart';
 import 'package:weather_app/app/modules/home/widgets/skeleton_view.dart';
+import 'package:weather_app/app/routes/app_routes.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
@@ -45,10 +45,10 @@ class HomeView extends GetView<HomeController> {
             foregroundColor: textColor,
             actions: [
               IconButton(
-                icon: const Icon(Icons.logout),
+                icon: const Icon(Icons.person),
                 color: textColor,
                 onPressed: () {
-                  Get.find<AuthController>().logout();
+                  Get.toNamed(AppRoutes.PROFILE);
                 },
               ),
             ],

@@ -5,6 +5,8 @@ import 'package:weather_app/app/modules/home/bindings/home_binding.dart';
 import 'package:weather_app/app/modules/home/views/home_view.dart';
 import 'package:weather_app/app/modules/splash/bindings/splash_binding.dart';
 import 'package:weather_app/app/modules/splash/views/splash_view.dart';
+import 'package:weather_app/app/modules/profile/bindings/profile_binding.dart';
+import 'package:weather_app/app/modules/profile/views/profile_view.dart';
 import 'package:weather_app/app/routes/app_routes.dart';
 
 class AppPages {
@@ -28,6 +30,11 @@ class AppPages {
       name: AppRoutes.HOME,
       page: () => const HomeView(),
       binding: HomeBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.PROFILE,
+      page: () => const ProfileView(),
+      binding: ProfileBinding(),
     ),
   ];
 }
