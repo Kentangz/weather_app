@@ -9,3 +9,9 @@ class CustomLocationPermissionDeniedException implements Exception {
   @override
   String toString() => message;
 }
+
+class NoInternetException implements Exception {
+  final String message = "No internet connection.";
+  @override
+  String toString() => message;
+}

@@ -80,8 +80,8 @@ class AuthController extends GetxController {
   }
 
   Future<void> logout() async {
-    await _auth.signOut();
     Get.offAllNamed(AppRoutes.LOGIN);
+    await _auth.signOut();
     NotificationHelper.showInfo(
       'Logout',
       'You have logged out.',
@@ -91,8 +91,8 @@ class AuthController extends GetxController {
   Future<void> sendPasswordReset() async {
     if (emailController.text.trim().isEmpty) {
       NotificationHelper.showError(
-        'Reset Gagal',
-        'Silakan masukkan email Anda di kolom email terlebih dahulu.',
+        'Reset Failed',
+        'Please enter your email in the email field first.',
       );
       return;
     }
@@ -103,12 +103,12 @@ class AuthController extends GetxController {
       );
 
       NotificationHelper.showSuccess(
-        'Email Terkirim',
-        'Link reset password telah dikirim ke email Anda. Silakan cek inbox.',
+        'Email Sent',
+        'A password reset link has been sent to your email. Please check your inbox.',
       );
     } on FirebaseAuthException catch (e) {
       String errorMessage = _handleAuthError(e);
-      NotificationHelper.showError('Reset Gagal', errorMessage);
+      NotificationHelper.showError('Reset Failed', errorMessage);
     }
   }
 
