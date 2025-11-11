@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:weather_app/app/data/services/storage_service.dart';
 import 'package:weather_app/app/routes/app_pages.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -18,6 +19,7 @@ Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   Get.put(WeatherService(), permanent: true);
+  Get.put(StorageService(), permanent: true);
   Get.put(AuthController(), permanent: true);
 
   runApp(const MyApp());
